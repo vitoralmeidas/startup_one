@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.vaos.example.entradausuario.screens.Ecommerce
 import com.vaos.example.entradausuario.screens.Login
+import com.vaos.example.entradausuario.screens.ProductControl
 import com.vaos.example.entradausuario.screens.Registration
 import com.vaos.example.entradausuario.ui.theme.EntradausuarioTheme
 
@@ -22,7 +23,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Ecommerce()
+                    ProductControl()
+//                    Ecommerce()
 //                    Registration()
 //                    Login()
                 }
