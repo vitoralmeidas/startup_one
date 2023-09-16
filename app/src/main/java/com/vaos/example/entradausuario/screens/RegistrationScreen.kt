@@ -30,11 +30,12 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.vaos.example.entradausuario.R
 import com.vaos.example.entradausuario.ui.theme.Mooli
 
 @Composable
-fun Registration() {
+fun RegistrationScreen(navController: NavController) {
 
     var email by remember {
         mutableStateOf("")
@@ -52,14 +53,10 @@ fun Registration() {
         mutableStateOf(false)
     }
 
-    var cor by remember {
-        mutableStateOf(Color.White)
-    }
 
     Column(
         modifier = Modifier
             .padding(32.dp)
-            .background(cor)
     ) {
         Box(
             modifier = Modifier
@@ -187,7 +184,11 @@ fun Registration() {
 
             Button(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = { cor = Color.White },
+                onClick = {
+                    if (email.isNotEmpty() && password.isNotEmpty() && cnpj.isNotEmpty()) {
+                        navController.navigate("ecommerce")
+                    }
+                },
                 shape = RoundedCornerShape(topStart = 16.dp, bottomEnd = 16.dp),
                 elevation = ButtonDefaults.buttonElevation(
                     defaultElevation = 10.dp,

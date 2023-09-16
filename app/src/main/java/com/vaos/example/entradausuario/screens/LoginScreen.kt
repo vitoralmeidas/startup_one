@@ -32,11 +32,12 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.vaos.example.entradausuario.R
 import com.vaos.example.entradausuario.ui.theme.Mooli
 
 @Composable
-fun Login() {
+fun Login(navController: NavController) {
 
     var email by remember {
         mutableStateOf("")
@@ -149,7 +150,9 @@ fun Login() {
         ) {
 
             Button(
-                onClick = {  },
+                onClick = {
+                    navController.navigate("registration")
+                },
                 shape = RoundedCornerShape(topStart = 16.dp, bottomEnd = 16.dp),
                 elevation = ButtonDefaults.buttonElevation(
                     defaultElevation = 10.dp,
@@ -172,7 +175,11 @@ fun Login() {
             Spacer(modifier = Modifier.width(38.dp))
 
             Button(
-                onClick = {  },
+                onClick = {
+                    if (email.isNotEmpty() && password.isNotEmpty()) {
+                        navController.navigate("ecommerce")
+                    }
+                },
                 shape = RoundedCornerShape(topStart = 16.dp, bottomEnd = 16.dp),
                 elevation = ButtonDefaults.buttonElevation(
                     defaultElevation = 10.dp,

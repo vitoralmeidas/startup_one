@@ -20,9 +20,15 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,8 +36,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.vaos.example.entradausuario.R
 import com.vaos.example.entradausuario.ui.theme.Mooli
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun getColorNumber(number: String): Color {
@@ -45,9 +54,15 @@ fun getColorNumber(number: String): Color {
 }
 
 @Composable
-fun ProductControl () {
+fun ProductControl(navController: NavController) {
 
-    Column (
+    var isLoading by remember { mutableStateOf(false) }
+
+    var actionCompleted by remember { mutableStateOf(false) }
+
+    val coroutineScope = rememberCoroutineScope()
+
+    Column(
         modifier = Modifier
             .padding(32.dp)
     ) {
@@ -78,7 +93,7 @@ fun ProductControl () {
                 .fillMaxWidth()
                 .padding(top = 12.dp, bottom = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-        ){
+        ) {
 
             Text(
                 modifier = Modifier
@@ -95,24 +110,28 @@ fun ProductControl () {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth()
-        ){
+        ) {
             Image(
                 modifier = Modifier.size(120.dp),
                 painter = painterResource(id = R.drawable.vestido_app),
-                contentDescription = "vestido infantil")
+                contentDescription = "vestido infantil"
+            )
         }
 
-        Row (modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 24.dp),
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 24.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically){
+            verticalAlignment = Alignment.CenterVertically
+        ) {
 
-            Box(){
+            Box() {
                 Text(
                     fontFamily = Mooli,
                     fontSize = 24.sp,
-                    text = "Shopee")
+                    text = "Shopee"
+                )
             }
 
             Box(
@@ -126,21 +145,24 @@ fun ProductControl () {
                     fontSize = 20.sp,
                     fontFamily = Mooli,
                     color = Color(10, 10, 10, 255),
-                    )
+                )
             }
 
         }
-        Row (modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 18.dp),
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 18.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically){
+            verticalAlignment = Alignment.CenterVertically
+        ) {
 
-            Box(){
+            Box() {
                 Text(
                     fontFamily = Mooli,
                     fontSize = 24.sp,
-                    text = "Amazon")
+                    text = "Amazon"
+                )
             }
 
             Box(
@@ -154,20 +176,23 @@ fun ProductControl () {
                     fontSize = 20.sp,
                     fontFamily = Mooli,
                     color = Color(10, 10, 10, 255),
-                    )
+                )
             }
 
         }
-        Row (modifier = Modifier
-            .fillMaxWidth(),
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically){
+            verticalAlignment = Alignment.CenterVertically
+        ) {
 
-            Box(){
+            Box() {
                 Text(
                     fontFamily = Mooli,
                     fontSize = 24.sp,
-                    text = "Magalu")
+                    text = "Magalu"
+                )
             }
 
             Box(
@@ -193,7 +218,20 @@ fun ProductControl () {
         ) {
 
             Button(
-                onClick = {  },
+                onClick = {
+                    if (!isLoading) {
+                        isLoading = true
+                        coroutineScope.launch {
+                            // Simulate a delay of 2 seconds
+                            delay(1000)
+
+                            // Perform the action after the delay
+                            actionCompleted = true
+                            isLoading = false
+                        }
+                    }
+                },
+                enabled = !isLoading,
                 shape = RoundedCornerShape(topStart = 16.dp, bottomEnd = 16.dp),
                 elevation = ButtonDefaults.buttonElevation(
                     defaultElevation = 10.dp,
@@ -204,13 +242,18 @@ fun ProductControl () {
                     contentColor = Color.Gray
                 )
             ) {
-                Icon(imageVector = Icons.Default.Refresh, contentDescription = "atualizar")
+                if (isLoading) {
+                    CircularProgressIndicator()
+                } else {
+                    Icon(imageVector = Icons.Default.Refresh, contentDescription = "atualizar")
+
+                }
             }
 
             Spacer(modifier = Modifier.width(56.dp))
 
             Button(
-                onClick = {  },
+                onClick = { navController.navigate("ecommerce")},
                 shape = RoundedCornerShape(topStart = 16.dp, bottomEnd = 16.dp),
                 elevation = ButtonDefaults.buttonElevation(
                     defaultElevation = 10.dp,

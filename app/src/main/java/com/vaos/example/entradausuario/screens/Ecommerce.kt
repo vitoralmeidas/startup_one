@@ -23,10 +23,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.vaos.example.entradausuario.ui.theme.Mooli
 
 @Composable
-fun Ecommerce () {
+fun Ecommerce (navController: NavController) {
     Column (
         modifier = Modifier
             .padding(32.dp)
@@ -83,7 +84,7 @@ fun Ecommerce () {
                     text = "Shopee")
             }
             Button(
-                onClick = {  },
+                onClick = { navController.navigate("product") },
                 shape = RoundedCornerShape(50),
                 elevation = ButtonDefaults.buttonElevation(
                     defaultElevation = 10.dp,
@@ -158,7 +159,7 @@ fun Ecommerce () {
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.End),
-            onClick = {  },
+            onClick = { navController.navigate("login") },
             shape = RoundedCornerShape(50),
             elevation = ButtonDefaults.buttonElevation(
                 defaultElevation = 10.dp,
